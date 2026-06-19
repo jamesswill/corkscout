@@ -1,4 +1,4 @@
-# Pour Decisions 🍷
+# CorkScout 🍷
 
 Find great-value bottles by mining the **by-the-glass** lists of wine-serious
 restaurants. A wine on a good restaurant's BTG list is an implicit sommelier
