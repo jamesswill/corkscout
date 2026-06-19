@@ -82,6 +82,9 @@
   .glass{margin-left:auto; text-align:right}
   .glass .amt{font-size:20px; color:var(--gold); font-weight:700; font-family:Georgia,serif}
   .glass .lbl{display:block; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em}
+  .src{font-family:'Inter',system-ui,sans-serif; font-size:11.5px; color:var(--muted);
+    text-decoration:none; padding-left:6px; display:inline-block}
+  .src:hover{color:var(--gold); text-decoration:underline}
   .buys{display:flex; gap:8px; margin-top:4px}
   .buy{
     flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
@@ -115,9 +118,9 @@
         <label>Area</label>
         <select id="fArea">
           <option value="">Anywhere</option>
-          <option value="LA">West LA</option>
-          <option value="NYC">East Village &amp; nearby (NYC)</option>
-          <option value="CAM">Cambridge &amp; nearby (MA)</option>
+          <option value="LA">Los Angeles</option>
+          <option value="NYC">New York</option>
+          <option value="BOS">Boston</option>
         </select>
       </div>
       <div class="f">
@@ -125,17 +128,8 @@
         <select id="fRest"><option value="">Any restaurant</option></select>
       </div>
       <div class="f">
-        <label>Body</label>
-        <select id="fBody">
-          <option value="">Any</option>
-          <option value="light">Light</option>
-          <option value="medium">Medium</option>
-          <option value="full">Full</option>
-        </select>
-      </div>
-      <div class="f">
-        <label>Max glass price · <span id="priceVal">$60</span></label>
-        <input id="fPrice" type="range" min="12" max="60" step="1" value="60">
+        <label>Max glass price · <span id="priceVal">$120</span></label>
+        <input id="fPrice" type="range" min="12" max="120" step="1" value="120">
       </div>
       <button class="clear" id="clear">Reset</button>
     </div>
@@ -148,8 +142,8 @@
   <div class="grid" id="grid"></div>
 
   <footer>
-    <b>How to read this:</b> Each card is a wine poured by the glass at a wine-serious restaurant. The price shown is roughly what the restaurant charges per glass — buying the bottle retail is typically a fraction of that. <b>Wine-Searcher</b> shows shops + current prices near you; <b>DoorDash</b> runs a quick search in case it's available for local delivery. A <b style="color:var(--gold)">★</b> marks Michelin-starred rooms; <b style="color:var(--gold)">on N lists</b> means the wine is poured at several of these restaurants — a louder endorsement.<br><br>
-    <b>About the data:</b> Curated, sommelier-informed seed data served from a Supabase database — real venues paired with producers each program is known to pour. Treat it as a shortlist, not tonight's live menu; call ahead for a specific pour.
+    <b>How to read this:</b> Each card is a wine actually poured by the glass at a wine-serious restaurant. The price shown is what that restaurant charges per glass — buying the bottle retail is typically a fraction of that. <b>Wine-Searcher</b> shows shops + current prices near you; <b>DoorDash</b> runs a quick search in case it's available for local delivery. A <b style="color:var(--gold)">★</b> marks Michelin-starred rooms.<br><br>
+    <b>About the data:</b> Every wine here is transcribed from a restaurant's actual published by-the-glass menu — each card links to that menu and the date we checked it. Menus change, so the link is the source of truth. If a venue's list can't be verified, it isn't here.
   </footer>
 </div>
 
