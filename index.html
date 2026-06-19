@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pour Decisions — Wine by the Glass, Decoded</title>
+<title>Corkscout — Wine by the Glass, Decoded</title>
 <style>
   :root{
     --bg:#1a1012; --panel:#241619; --panel2:#2e1c20; --ink:#f4ece6;
@@ -29,21 +29,17 @@
     background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1px solid var(--line);
     border-radius:18px; padding:20px; margin:26px 0 18px; box-shadow:0 18px 50px #0008;
   }
-  .searchrow{display:flex; gap:10px; flex-wrap:wrap}
-  #q{
-    flex:1 1 320px; min-width:0; font-size:18px; padding:15px 18px; border-radius:12px;
-    border:1px solid var(--line); background:#160c0e; color:var(--ink);
-    font-family:inherit; outline:none;
+  .typehead{font-family:'Inter',system-ui,sans-serif; font-size:12px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); margin:0 2px 12px}
+  .typebtns{display:flex; gap:9px; flex-wrap:wrap}
+  .typebtn{
+    cursor:pointer; font-family:inherit; font-size:17px; color:var(--cream);
+    background:#160c0e; border:1px solid var(--line); padding:11px 20px; border-radius:12px;
+    transition:.15s;
   }
-  #q:focus{border-color:var(--wine2); box-shadow:0 0 0 3px #b8434f33}
-  .examples{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px}
-  .ex{
-    cursor:pointer; font-family:'Inter',system-ui,sans-serif; font-size:13px;
-    background:var(--chip); border:1px solid var(--line); color:var(--cream);
-    padding:7px 12px; border-radius:999px; transition:.15s;
-  }
-  .ex:hover{background:var(--wine); border-color:var(--wine2)}
-  .filters{display:flex; gap:14px; flex-wrap:wrap; margin-top:16px; align-items:flex-end}
+  .typebtn:hover{border-color:var(--wine2)}
+  .typebtn.active{background:var(--wine); border-color:var(--wine2); color:#fff; font-weight:600}
+  .filters{display:flex; gap:14px; flex-wrap:wrap; margin-top:18px; align-items:flex-end}
   .f{display:flex; flex-direction:column; gap:5px}
   .f label{font-family:'Inter',system-ui,sans-serif; font-size:11px; letter-spacing:.08em;
     text-transform:uppercase; color:var(--muted)}
@@ -86,13 +82,16 @@
   .glass{margin-left:auto; text-align:right}
   .glass .amt{font-size:20px; color:var(--gold); font-weight:700; font-family:Georgia,serif}
   .glass .lbl{display:block; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em}
+  .buys{display:flex; gap:8px; margin-top:4px}
   .buy{
-    display:flex; align-items:center; justify-content:center; gap:7px; margin-top:4px;
-    text-decoration:none; font-family:'Inter',system-ui,sans-serif; font-size:13.5px; font-weight:600;
-    background:var(--wine); color:#fff; padding:11px; border-radius:10px; border:1px solid var(--wine2);
-    transition:.15s;
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    text-decoration:none; font-family:'Inter',system-ui,sans-serif; font-size:13px; font-weight:600;
+    padding:11px 8px; border-radius:10px; transition:.15s; color:#fff;
   }
-  .buy:hover{background:var(--wine2)}
+  .buy.ws{background:var(--wine); border:1px solid var(--wine2)}
+  .buy.ws:hover{background:var(--wine2)}
+  .buy.dd{background:#eb1700; border:1px solid #ff3b1f}
+  .buy.dd:hover{background:#ff3b1f}
   .empty{text-align:center; color:var(--muted); padding:60px 20px; font-style:italic; line-height:1.6}
   footer{margin-top:34px; padding-top:20px; border-top:1px solid var(--line);
     font-family:'Inter',system-ui,sans-serif; font-size:12.5px; color:var(--muted); line-height:1.6}
@@ -103,29 +102,15 @@
 <body>
 <div class="wrap">
   <header>
-    <h1 class="logo">Pour <span class="by">Decisions</span></h1>
+    <h1 class="logo">Cork<span class="by">scout</span></h1>
     <p class="tag">Wines the best sommeliers pour by the glass — decoded into bottles you can buy.</p>
-    <p class="thesis">A wine earns a by-the-glass slot at a serious restaurant because someone with a sommelier's palate vouched for it — and the house makes its margin on the pour. So the same bottle, bought retail, is often a quietly excellent value. Tell us what you're in the mood for; we'll point you to the bottle and where to find it.</p>
+    <p class="thesis">A wine earns a by-the-glass slot at a serious restaurant because someone with a sommelier's palate vouched for it — and the house makes its margin on the pour. So the same bottle, bought retail, is often a quietly excellent value. Pick a wine type, narrow by neighborhood or restaurant, and we'll point you to the bottle and where to buy it.</p>
   </header>
 
   <div class="search-card">
-    <div class="searchrow">
-      <input id="q" type="text" placeholder="What are you in the mood for? e.g. a crisp white for seafood" autocomplete="off">
-    </div>
-    <div class="examples" id="examples"></div>
+    <div class="typehead">Pick a wine type</div>
+    <div class="typebtns" id="typebtns"></div>
     <div class="filters">
-      <div class="f">
-        <label>Type</label>
-        <select id="fType">
-          <option value="">Any</option>
-          <option value="sparkling">Sparkling</option>
-          <option value="white">White</option>
-          <option value="rosé">Rosé</option>
-          <option value="orange">Orange / skin-contact</option>
-          <option value="red">Red</option>
-          <option value="dessert">Dessert / fortified</option>
-        </select>
-      </div>
       <div class="f">
         <label>Area</label>
         <select id="fArea">
@@ -158,12 +143,12 @@
 
   <div class="meta">
     <span id="count"></span>
-    <span>Prices = restaurant glass pour · <b style="color:var(--gold)">Find a bottle</b> opens live local shop prices</span>
+    <span>Prices = restaurant glass pour · buttons open <b style="color:var(--gold)">Wine-Searcher</b> or <b style="color:#ff6a52">DoorDash</b> to buy</span>
   </div>
   <div class="grid" id="grid"></div>
 
   <footer>
-    <b>How to read this:</b> Each card is a wine poured by the glass at a wine-serious restaurant in one of three areas. The price shown is roughly what the restaurant charges per glass — buying the bottle retail is typically a fraction of that. <b>Find a bottle near you</b> opens Wine-Searcher, which shows shops carrying that wine and current prices in your area. A <b style="color:var(--gold)">★</b> marks Michelin-starred rooms; <b style="color:var(--gold)">on N lists</b> means the wine is poured at several of these restaurants — a louder endorsement.<br><br>
+    <b>How to read this:</b> Each card is a wine poured by the glass at a wine-serious restaurant. The price shown is roughly what the restaurant charges per glass — buying the bottle retail is typically a fraction of that. <b>Wine-Searcher</b> shows shops + current prices near you; <b>DoorDash</b> runs a quick search in case it's available for local delivery. A <b style="color:var(--gold)">★</b> marks Michelin-starred rooms; <b style="color:var(--gold)">on N lists</b> means the wine is poured at several of these restaurants — a louder endorsement.<br><br>
     <b>About the data:</b> Curated, sommelier-informed seed data served from a Supabase database — real venues paired with producers each program is known to pour. Treat it as a shortlist, not tonight's live menu; call ahead for a specific pour.
   </footer>
 </div>
