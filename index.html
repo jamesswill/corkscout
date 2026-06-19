@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Decisions — Wine by the Glass, Decoded</title>
+<style>
+  :root{
+    --bg:#1a1012; --panel:#241619; --panel2:#2e1c20; --ink:#f4ece6;
+    --muted:#bda7a0; --line:#3d262b; --wine:#8c2f39; --wine2:#b8434f;
+    --gold:#c9a24b; --cream:#f4ece6; --chip:#33212532;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:radial-gradient(1200px 600px at 50% -10%, #2a181c 0%, var(--bg) 60%);
+    color:var(--ink); font-family:'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 18px 80px}
+  header{padding:38px 0 14px; text-align:center}
+  .logo{font-size:40px; letter-spacing:.5px; margin:0; font-weight:600}
+  .logo .by{color:var(--wine2)}
+  .tag{color:var(--muted); margin:8px 0 0; font-size:16px; font-style:italic}
+  .thesis{
+    max-width:720px; margin:18px auto 0; color:var(--muted); font-size:14.5px;
+    line-height:1.55; font-family:'Inter',system-ui,sans-serif;
+  }
+  .search-card{
+    background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1px solid var(--line);
+    border-radius:18px; padding:20px; margin:26px 0 18px; box-shadow:0 18px 50px #0008;
+  }
+  .searchrow{display:flex; gap:10px; flex-wrap:wrap}
+  #q{
+    flex:1 1 320px; min-width:0; font-size:18px; padding:15px 18px; border-radius:12px;
+    border:1px solid var(--line); background:#160c0e; color:var(--ink);
+    font-family:inherit; outline:none;
+  }
+  #q:focus{border-color:var(--wine2); box-shadow:0 0 0 3px #b8434f33}
+  .examples{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px}
+  .ex{
+    cursor:pointer; font-family:'Inter',system-ui,sans-serif; font-size:13px;
+    background:var(--chip); border:1px solid var(--line); color:var(--cream);
+    padding:7px 12px; border-radius:999px; transition:.15s;
+  }
+  .ex:hover{background:var(--wine); border-color:var(--wine2)}
+  .filters{display:flex; gap:14px; flex-wrap:wrap; margin-top:16px; align-items:flex-end}
+  .f{display:flex; flex-direction:column; gap:5px}
+  .f label{font-family:'Inter',system-ui,sans-serif; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted)}
+  .f select, .f input[type=range]{
+    background:#160c0e; color:var(--ink); border:1px solid var(--line);
+    border-radius:9px; padding:9px 10px; font-family:inherit; font-size:14px;
+  }
+  .f input[type=range]{padding:0; width:150px; accent-color:var(--wine2)}
+  #priceVal{color:var(--gold); font-variant-numeric:tabular-nums}
+  .clear{margin-left:auto; align-self:flex-end; cursor:pointer; background:none; border:1px solid var(--line);
+    color:var(--muted); padding:9px 14px; border-radius:9px; font-family:'Inter',sans-serif; font-size:13px}
+  .clear:hover{color:var(--ink); border-color:var(--wine2)}
+  .meta{font-family:'Inter',system-ui,sans-serif; color:var(--muted); font-size:13px;
+    margin:6px 4px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px}
+  .card{
+    background:linear-gradient(180deg,var(--panel),#1d1215); border:1px solid var(--line);
+    border-radius:15px; padding:18px; display:flex; flex-direction:column; gap:11px;
+    transition:.18s; position:relative; overflow:hidden;
+  }
+  .card:hover{border-color:var(--wine2); transform:translateY(-2px); box-shadow:0 14px 36px #0007}
+  .typebar{position:absolute; left:0; top:0; bottom:0; width:4px}
+  .t-sparkling{background:#d8b24a} .t-white{background:#e4d58a} .t-rosé{background:#e88aa0}
+  .t-orange{background:#d98a3c} .t-red{background:#9c2f3a} .t-dessert{background:#7a4a8c}
+  .wname{font-size:19px; font-weight:600; line-height:1.25; margin:0; padding-left:6px}
+  .vint{color:var(--gold); font-weight:600}
+  .sub{font-family:'Inter',system-ui,sans-serif; font-size:13px; color:var(--muted); padding-left:6px; margin:-4px 0 0}
+  .tags{display:flex; flex-wrap:wrap; gap:6px; padding-left:6px}
+  .tg{font-family:'Inter',system-ui,sans-serif; font-size:11px; padding:3px 9px; border-radius:999px;
+    background:var(--chip); border:1px solid var(--line); color:var(--cream)}
+  .tg.pair{border-color:#3a4a3a; color:#bfe0bf; background:#1c2a1c44}
+  .endorse{font-family:'Inter',system-ui,sans-serif; font-size:11px; padding:3px 9px; border-radius:999px;
+    background:#3a2a0c66; border:1px solid #c9a24b66; color:var(--gold); font-weight:600}
+  .star{color:var(--gold); font-size:12px; letter-spacing:1px}
+  .rest{display:flex; align-items:center; gap:8px; padding:11px 6px 0; border-top:1px solid var(--line); margin-top:2px;
+    font-family:'Inter',system-ui,sans-serif; font-size:13.5px}
+  .rest b{color:var(--ink); font-weight:600}
+  .area-pill{font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+    border:1px solid var(--line); border-radius:6px; padding:2px 6px}
+  .glass{margin-left:auto; text-align:right}
+  .glass .amt{font-size:20px; color:var(--gold); font-weight:700; font-family:Georgia,serif}
+  .glass .lbl{display:block; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em}
+  .buy{
+    display:flex; align-items:center; justify-content:center; gap:7px; margin-top:4px;
+    text-decoration:none; font-family:'Inter',system-ui,sans-serif; font-size:13.5px; font-weight:600;
+    background:var(--wine); color:#fff; padding:11px; border-radius:10px; border:1px solid var(--wine2);
+    transition:.15s;
+  }
+  .buy:hover{background:var(--wine2)}
+  .empty{text-align:center; color:var(--muted); padding:60px 20px; font-style:italic; line-height:1.6}
+  footer{margin-top:34px; padding-top:20px; border-top:1px solid var(--line);
+    font-family:'Inter',system-ui,sans-serif; font-size:12.5px; color:var(--muted); line-height:1.6}
+  footer b{color:var(--cream)}
+  @media (max-width:560px){ .logo{font-size:32px} .filters{gap:10px} .f input[type=range]{width:120px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo">Pour <span class="by">Decisions</span></h1>
+    <p class="tag">Wines the best sommeliers pour by the glass — decoded into bottles you can buy.</p>
+    <p class="thesis">A wine earns a by-the-glass slot at a serious restaurant because someone with a sommelier's palate vouched for it — and the house makes its margin on the pour. So the same bottle, bought retail, is often a quietly excellent value. Tell us what you're in the mood for; we'll point you to the bottle and where to find it.</p>
+  </header>
+
+  <div class="search-card">
+    <div class="searchrow">
+      <input id="q" type="text" placeholder="What are you in the mood for? e.g. a crisp white for seafood" autocomplete="off">
+    </div>
+    <div class="examples" id="examples"></div>
+    <div class="filters">
+      <div class="f">
+        <label>Type</label>
+        <select id="fType">
+          <option value="">Any</option>
+          <option value="sparkling">Sparkling</option>
+          <option value="white">White</option>
+          <option value="rosé">Rosé</option>
+          <option value="orange">Orange / skin-contact</option>
+          <option value="red">Red</option>
+          <option value="dessert">Dessert / fortified</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Area</label>
+        <select id="fArea">
+          <option value="">Anywhere</option>
+          <option value="LA">West LA</option>
+          <option value="NYC">East Village &amp; nearby (NYC)</option>
+          <option value="CAM">Cambridge &amp; nearby (MA)</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Restaurant</label>
+        <select id="fRest"><option value="">Any restaurant</option></select>
+      </div>
+      <div class="f">
+        <label>Body</label>
+        <select id="fBody">
+          <option value="">Any</option>
+          <option value="light">Light</option>
+          <option value="medium">Medium</option>
+          <option value="full">Full</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Max glass price · <span id="priceVal">$60</span></label>
+        <input id="fPrice" type="range" min="12" max="60" step="1" value="60">
+      </div>
+      <button class="clear" id="clear">Reset</button>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span id="count"></span>
+    <span>Prices = restaurant glass pour · <b style="color:var(--gold)">Find a bottle</b> opens live local shop prices</span>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <b>How to read this:</b> Each card is a wine poured by the glass at a wine-serious restaurant in one of three areas. The price shown is roughly what the restaurant charges per glass — buying the bottle retail is typically a fraction of that. <b>Find a bottle near you</b> opens Wine-Searcher, which shows shops carrying that wine and current prices in your area. A <b style="color:var(--gold)">★</b> marks Michelin-starred rooms; <b style="color:var(--gold)">on N lists</b> means the wine is poured at several of these restaurants — a louder endorsement.<br><br>
+    <b>About the data:</b> Curated, sommelier-informed seed data served from a Supabase database — real venues paired with producers each program is known to pour. Treat it as a shortlist, not tonight's live menu; call ahead for a specific pour.
+  </footer>
+</div>
+
+<!-- Supabase client, your config, then the app -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

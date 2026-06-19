@@ -1,0 +1,43 @@
+name: Deploy to Supabase
+
+# Runs on every push to main, and lets you trigger it by hand from the
+# Actions tab (the "Run workflow" button).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      # psql is normally preinstalled on the runner; install if missing.
+      - name: Ensure psql is available
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y postgresql-client
+          fi
+
+      # 1) Make sure the tables/view/policies exist (idempotent, non-destructive).
+      - name: Apply database schema
+        run: psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f schema.sql
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      # 2) Upsert the wines from data.js into the database.
+      - name: Seed data
+        run: node seed.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}

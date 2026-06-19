@@ -1,0 +1,12 @@
+# your machine-specific Supabase keys (never commit)
+config.js
+
+# node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# os / editor
+.DS_Store
+.vscode/
+*.log
