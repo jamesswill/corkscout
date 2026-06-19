@@ -1,5 +1,6 @@
-# your machine-specific Supabase keys (never commit)
-config.js
+# NOTE: config.js IS committed so the hosted site has the Supabase URL +
+# publishable key. That key is meant to live in the browser; the read-only
+# RLS policies protect the data. The SECRET key is never here (Actions only).
 
 # node
 node_modules/
