@@ -15,6 +15,7 @@ const TYPES = [
   { v: "orange",    label: "Orange" },
   { v: "red",       label: "Red" },
   { v: "dessert",   label: "Dessert" },
+  { v: "sake",      label: "Sake" },
 ];
 const AREA_LABEL = { LA: "Los Angeles", NYC: "New York", BOS: "Boston", CAM: "Boston" };
 const AREA_ORDER = ["LA", "NYC", "BOS"];
@@ -45,7 +46,7 @@ function card(w){
   return `<div class="card">
     <div class="typebar t-${w.t}"></div>
     <h3 class="wname">${w.n} <span class="vint">${w.v}</span></h3>
-    <p class="sub">${w.g} &middot; ${w.r}</p>
+    <p class="sub">${[w.g, w.r].filter(Boolean).join(" &middot; ")}</p>
     <div class="rest">
       <span><b>${w.rest}</b> ${star}</span><span class="area-pill">${AREA_LABEL[w.area]||w.area}</span>
       <span class="glass"><span class="amt">$${w.gp}</span><span class="lbl">per glass</span></span>

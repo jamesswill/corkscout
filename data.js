@@ -22,6 +22,15 @@ const RESTAURANTS = [
   { name:"Grill 23 & Bar", area:"BOS", neighborhood:"Back Bay, Boston", michelin:0,
     menu_url:"https://www.grill23.com/menus",
     menu_checked:"2026-06-19" },
+  { name:"n/soto", area:"LA", neighborhood:"West Adams, LA", michelin:0,
+    menu_url:"https://n-soto.com/menu",
+    menu_checked:"2026-06-19" },
+  { name:"King", area:"NYC", neighborhood:"SoHo, Manhattan", michelin:1,
+    menu_url:"https://kingrestaurant.nyc/cocktails-wines-by-the-glass",
+    menu_checked:"2026-06-19" },
+  { name:"Estela", area:"NYC", neighborhood:"NoHo, Manhattan", michelin:1,
+    menu_url:"https://hub.binwise.com/restaurant/estela/list/estela-wine-list.pdf",
+    menu_checked:"2026-06-19" },
 ];
 
 const WINES = [
@@ -112,7 +121,61 @@ const WINES = [
 {n:"RouteStock Pinot Noir",v:"2023",t:"red",g:"Pinot Noir",r:"Sonoma Coast, California",rest:"Grill 23 & Bar",gp:17},
 {n:"Castello di Ama 'Montebuoni' Chianti Classico Riserva",v:"2021",t:"red",g:"Sangiovese",r:"Tuscany, Italy",rest:"Grill 23 & Bar",gp:28},
 {n:"J.L. Chave Selections 'Mon Coeur' Côtes-du-Rhône",v:"2024",t:"red",g:"Syrah / Grenache",r:"Rhône, France",rest:"Grill 23 & Bar",gp:17},
-{n:"Pago del Cielo 'Celeste' Crianza Tempranillo",v:"2022",t:"red",g:"Tempranillo",r:"Ribera del Duero, Spain",rest:"Grill 23 & Bar",gp:18}
+{n:"Pago del Cielo 'Celeste' Crianza Tempranillo",v:"2022",t:"red",g:"Tempranillo",r:"Ribera del Duero, Spain",rest:"Grill 23 & Bar",gp:18},
+
+/* ===== n/soto — West Adams, LA =====
+   Source: n/soto menu (n-soto.com/menu, "Sake by the Glass"), checked 2026-06-19.
+   Sake graded by classification; region "Japan" except where the brewery is
+   explicitly elsewhere (Brooklyn Kura). */
+{n:"Uehara 'Forest Spirit'",v:"NV",t:"sake",g:"Usunigori Junmai",r:"Japan",rest:"n/soto",gp:17},
+{n:"Sawanoi 'Super Dry'",v:"NV",t:"sake",g:"Junmai",r:"Japan",rest:"n/soto",gp:16},
+{n:"Shibata 'Pink' (200ml)",v:"NV",t:"sake",g:"Nigori Junmai Ginjo",r:"Japan",rest:"n/soto",gp:19},
+{n:"Kamenoi 'Kudoki Jozu'",v:"NV",t:"sake",g:"Junmai Ginjo",r:"Japan",rest:"n/soto",gp:14},
+{n:"Azumanofumoto 'First Wave'",v:"NV",t:"sake",g:"Junmai Ginjo",r:"Japan",rest:"n/soto",gp:16},
+{n:"Koueigiku 'Twilight Orange'",v:"NV",t:"sake",g:"Junmai Ginjo",r:"Japan",rest:"n/soto",gp:15},
+{n:"Tenryo 'Imperial Landing'",v:"NV",t:"sake",g:"Junmai Daiginjo",r:"Japan",rest:"n/soto",gp:17},
+{n:"Kodama 'Clear Moon'",v:"NV",t:"sake",g:"Junmai Ginjo",r:"Japan",rest:"n/soto",gp:16},
+{n:"Kirei 'Mannen'",v:"NV",t:"sake",g:"Junmai Daiginjo",r:"Japan",rest:"n/soto",gp:15},
+{n:"Brooklyn Kura 'Ashokan' (375ml)",v:"NV",t:"sake",g:"Junmai Ginjo",r:"Brooklyn, New York",rest:"n/soto",gp:36},
+{n:"Ohmine '3 Grain'",v:"NV",t:"sake",g:"Junmai Daiginjo",r:"Japan",rest:"n/soto",gp:22},
+{n:"Hououbiden 'Asahimai'",v:"NV",t:"sake",g:"Junmai Daiginjo",r:"Japan",rest:"n/soto",gp:19},
+
+/* ===== KING — SoHo, NYC =====
+   Source: King "Wines by the Glass" page (kingrestaurant.nyc/cocktails-wines-by-the-glass),
+   checked 2026-06-19. */
+{n:"Diletta Tonello 'io Teti' Spumante",v:"2018",t:"sparkling",g:"Spumante",r:"Italy",rest:"King",gp:19},
+{n:"Pierre Moncuit 'Hugues de Coulmet' Blanc de Blancs Champagne",v:"NV",t:"sparkling",g:"Chardonnay",r:"Champagne, France",rest:"King",gp:30},
+{n:"Domaine de la Pépière 'Gras Moutons' Muscadet",v:"2021",t:"white",g:"Melon de Bourgogne",r:"Loire, France",rest:"King",gp:16},
+{n:"Arnaud Lambert 'Clos du Midi' Chenin Blanc",v:"2021",t:"white",g:"Chenin Blanc",r:"Saumur, Loire, France",rest:"King",gp:18},
+{n:"Monastero Trappiste Vitorchiano 'Coenobium Bianco'",v:"2021",t:"white",g:"Trebbiano",r:"Lazio, Italy",rest:"King",gp:19},
+{n:"Claudio Vio Pigato",v:"2021",t:"white",g:"Pigato",r:"Riviera Ligure di Ponente, Liguria, Italy",rest:"King",gp:22},
+{n:"King Rosé",v:"2021",t:"rosé",g:"",r:"Languedoc, France",rest:"King",gp:16},
+{n:"La Villana Aleatico Rosato",v:"NV",t:"rosé",g:"Aleatico",r:"Lazio, Italy",rest:"King",gp:17},
+{n:"Equis (M. Graillot) 'Crozes-Hermitage Équinoxe'",v:"2021",t:"red",g:"Syrah",r:"Crozes-Hermitage, Rhône, France",rest:"King",gp:18},
+{n:"M. Lapierre 'Raisins Gaulois'",v:"2021",t:"red",g:"Gamay",r:"Beaujolais, France",rest:"King",gp:20},
+{n:"Georges Roy 'Savigny-lès-Beaune Les Picotins'",v:"2020",t:"red",g:"Pinot Noir",r:"Burgundy, France",rest:"King",gp:21},
+{n:"Maison Arrextea 'Irouléguy Rouge'",v:"2019",t:"red",g:"Cabernet blend",r:"Irouléguy, France",rest:"King",gp:24},
+
+/* ===== ESTELA — NoHo, NYC =====
+   Source: Estela wine list (By the Glass section), checked 2026-06-19.
+   Estela groups its glass pours as Under Flor / Sparkling / White / Skin
+   Contact / Red, plus dessert-by-the-glass; flor & fortified shown as dessert. */
+{n:"Alvear '3 Miradas' Vino de Pueblo",v:"2021",t:"white",g:"",r:"Andalucía, Spain",rest:"Estela",gp:14},
+{n:"Bénédicte & Stéphane Tissot Arbois Savagnin Sous Voile",v:"2021",t:"white",g:"Savagnin",r:"Jura, France",rest:"Estela",gp:29},
+{n:"El Maestro Sierra 12-Year Amontillado",v:"NV",t:"dessert",g:"Amontillado Sherry",r:"Jerez, Andalucía, Spain",rest:"Estela",gp:19},
+{n:"Zafeirakis 'Prologue' Extra Brut Rosé",v:"NV",t:"sparkling",g:"",r:"Thessaly, Greece",rest:"Estela",gp:18},
+{n:"Franck Bonville Blanc de Blancs Grand Cru",v:"NV",t:"sparkling",g:"Chardonnay",r:"Champagne, France",rest:"Estela",gp:32},
+{n:"JB Becker 'Münsterer Rheinberg' Riesling Kabinett Trocken",v:"2023",t:"white",g:"Riesling",r:"Rheingau, Germany",rest:"Estela",gp:23},
+{n:"Domaine Lupin Roussette de Savoie 'Frangy'",v:"2024",t:"white",g:"Altesse",r:"Savoie, France",rest:"Estela",gp:20},
+{n:"Natus Vini 'Intus' Branco",v:"2022",t:"white",g:"",r:"Alentejano, Portugal",rest:"Estela",gp:19},
+{n:"Domaine Paquet Bourgogne Blanc",v:"2024",t:"white",g:"Chardonnay",r:"Burgundy, France",rest:"Estela",gp:25},
+{n:"Arnot-Roberts Touriga Nacional Rosé",v:"2025",t:"orange",g:"Touriga Nacional",r:"California, USA",rest:"Estela",gp:19},
+{n:"Yohan Lardy 'Poppy' Gamay",v:"2024",t:"red",g:"Gamay",r:"Beaujolais, France",rest:"Estela",gp:18},
+{n:"Tierra Fundida 'Wanderer' Listán Negro",v:"2024",t:"red",g:"Listán Negro",r:"Canary Islands, Spain",rest:"Estela",gp:21},
+{n:"Le Petit Saint Vincent Cabernet Franc, Saumur-Champigny",v:"2022",t:"red",g:"Cabernet Franc",r:"Loire, France",rest:"Estela",gp:19},
+{n:"Elodie Jaume 'Coudoulet' Côtes du Rhône",v:"2024",t:"red",g:"",r:"Rhône, France",rest:"Estela",gp:23},
+{n:"Pablo Fallabrino 'Alcyone' Tannat",v:"NV",t:"dessert",g:"Tannat",r:"Atlántida, Uruguay",rest:"Estela",gp:18},
+{n:"Rare Wine Co. 'Boston Bual' Madeira",v:"NV",t:"dessert",g:"Bual",r:"Madeira, Portugal",rest:"Estela",gp:20}
 ];
 
 /* Importable by the Node seed script without affecting the browser. */

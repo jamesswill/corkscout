@@ -51,6 +51,10 @@ alter table restaurants add column if not exists menu_checked date;
 alter table restaurants drop constraint if exists restaurants_area_check;
 alter table restaurants add  constraint restaurants_area_check
   check (area in ('LA','NYC','BOS','CAM'));
+-- Allow 'sake' as a type.
+alter table wines drop constraint if exists wines_type_check;
+alter table wines add  constraint wines_type_check
+  check (type in ('sparkling','white','rosé','orange','red','dessert','sake'));
 
 create index if not exists idx_wines_type        on wines (type);
 create index if not exists idx_pours_restaurant  on pours (restaurant_id);
